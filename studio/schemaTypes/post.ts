@@ -38,12 +38,11 @@ export default defineType({
         rows: 3,
         validation: (rule) => rule.required().max(200),
     }),
-    // Optional: If you want a full blog post body with rich text
-    // defineField({
-    //   name: 'body',
-    //   title: 'Body',
-    //   type: 'blockContent', // Assumes you have a blockContent schema
-    // }),
+    defineField({
+      name: 'body',
+      title: 'Body',
+      type: 'blockContent',
+    }),
   ],
   preview: {
     select: {

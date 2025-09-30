@@ -1,20 +1,33 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
-import Section from '../components/Section.astro';
 import Sidebar from '../components/Sidebar.jsx';
+import ContentEntry from '../components/ContentEntry.astro';
+import { getAllWritings } from '../lib/queries';
+
+// Fetch all posts from Sanity
+const allWritings = await getAllWritings();
 ---
 
 <BaseLayout title="All Posts | Krish Patel">
     <Sidebar client:load />
-    <div class="div class=space-y-16 max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
-        <header>
-            <h1 class="text-4xl font-bold text-white">All Writings</h1>
-            <p class="text-neutral-400 mt-2">A complete archive.</p>
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <header class="mb-12">
+            <h1 class="text-4xl font-bold text-neutral-900 dark:text-white">All Postings</h1>
+            <p class="text-neutral-500 dark:text-neutral-400 mt-2">A complete archive.</p>
         </header>
 
-        {/* This is where you would fetch and list ALL posts from Sanity */}
-        <div class="border-t border-neutral-800 pt-8">
-             <p class="text-neutral-500">All posts will be listed here soon...</p>
+        <div class="border-t border-neutral-200 dark:border-neutral-800 pt-8">
+            <div class="space-y-8">
+                {allWritings.map(entry => (
+                    <ContentEntry 
+                        title={entry.title} 
+                        date={new Date(entry.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} 
+                        description={entry.description} 
+                        url={`/posts/${entry.slug}`} 
+                    />
+                ))}
+            </div>
         </div>
     </div>
 </BaseLayout>
+

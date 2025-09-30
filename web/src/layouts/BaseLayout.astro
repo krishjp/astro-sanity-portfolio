@@ -1,7 +1,7 @@
 ---
-// This component provides the basic HTML shell for all pages.
-// It includes the head, sets the dark theme, and loads the Inter font.
 import '../styles/global.css';
+import Footer from '../components/Footer.astro';
+
 ---
 
 <!doctype html>
@@ -33,13 +33,15 @@ import '../styles/global.css';
       }
     </script>
   </head>
-  <body class="bg-white text-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 font-sans transition-colors duration-300">
+  <body class="bg-white dark:bg-[var(--dark-bg)] text-neutral-800 dark:text-neutral-300 font-sans transition-colors duration-300">
 
     <div id="spotlight"></div>
 
-    <div class="relative z-10 max-w-5xl mx-auto px-6 pt-16 pb-20 md:pt-16 md:pb-32">
+    <div class="relative z-10 max-w-5xl mx-auto px-6 pt-28 pb-20 md:pt-28 md:pb-32">
       <slot />
     </div>
+
+    <Footer />
 
     <script>
       document.addEventListener('DOMContentLoaded', () => {
@@ -61,9 +63,13 @@ import '../styles/global.css';
     <style is:global>
       :root {
         --spotlight-color: rgba(212, 212, 212, 0.5); /* Light theme spotlight */
+        
+        /* --- Easy-to-Edit Background Parameters --- */
+        --dark-bg: #0d1117; /* The main, deep navy background color */
       }
       .dark {
-        --spotlight-color: rgba(38, 38, 38, 0.75); /* Dark theme spotlight */
+        /* Updated spotlight color to a lighter navy/blue */
+        --spotlight-color: rgba(31, 39, 54, 0.75);
       }
       #spotlight {
         position: fixed;
@@ -72,11 +78,11 @@ import '../styles/global.css';
         right: 0;
         bottom: 0;
         background: radial-gradient(
-          circle 50px at var(--x, 50%) var(--y, 50%),
+          circle 100px at var(--x, 50%) var(--y, 50%),
           var(--spotlight-color),
-          transparent 80%
+          transparent 90%
         );
-        opacity: 0; /* Initially hidden */
+        opacity: 0;
         transition: opacity 0.3s ease-in-out;
         /* Ensure the spotlight is behind the content but above the body's background */
         z-index: 0; 
@@ -84,6 +90,6 @@ import '../styles/global.css';
         pointer-events: none;
       }
     </style>
-
   </body>
 </html>
+

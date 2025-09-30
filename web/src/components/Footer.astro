@@ -1,0 +1,68 @@
+---
+// Import SVG assets directly
+import GithubMarkBlack from '../assets/github-mark.svg';
+import GithubMarkWhite from '../assets/github-mark-white.svg';
+import LinkedinIcon from '../assets/linkedin.svg';
+import AstroLogo from '../assets/astro.svg';
+import ReactLogo from '../assets/react.svg';
+import SanityLogo from '../assets/sanity.svg';
+import TailwindLogo from '../assets/tailwind-css.svg';
+
+// --- Configuration ---
+const socialLinks = {
+  github: 'https://github.com/krishjp',
+  linkedin: 'https://linkedin.com/in/krishjp',
+};
+const contactEmail = "krishjpatel@outlook.com";
+const frameworks = [
+  { name: 'Astro', url: 'https://astro.build', logo: AstroLogo },
+  { name: 'React', url: 'https://react.dev', logo: ReactLogo },
+  { name: 'Sanity', url: 'https://sanity.io', logo: SanityLogo },
+  { name: 'Tailwind CSS', url: 'https://tailwindcss.com', logo: TailwindLogo },
+];
+---
+
+<footer class="relative z-10 mt-24 border-t border-neutral-200 dark:border-neutral-800 py-12 transition-colors">
+  <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-y-10 text-sm">
+    
+    <!-- Column 1: Connect -->
+    <div class="flex flex-col items-center text-center">
+      <h3 class="font-semibold text-neutral-900 dark:text-white mb-4">Connect</h3>
+      <div class="flex flex-col space-y-4">
+        <a href={socialLinks.github} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-neutral-500 dark:text-neutral-400 hover:text-orange-400 transition-colors">
+          <!-- Light Mode Icon -->
+          <img src={GithubMarkBlack.src} alt="GitHub Logo" width="20" height="20" class="block dark:hidden" />
+          <!-- Dark Mode Icon -->
+          <img src={GithubMarkWhite.src} alt="GitHub Logo" width="20" height="20" class="hidden dark:block" />
+          <span>GitHub</span>
+        </a>
+        <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-neutral-500 dark:text-neutral-400 hover:text-orange-400 transition-colors">
+          <img src={LinkedinIcon.src} alt="LinkedIn Logo" width="20" height="20" />
+          <span>LinkedIn</span>
+        </a>
+      </div>
+    </div>
+
+    <!-- Column 2: Contact -->
+    <div class="flex flex-col items-start">
+      <h3 class="font-semibold text-neutral-900 dark:text-white mb-4">Contact</h3>
+      <a href={`mailto:${contactEmail}`} class="text-neutral-500 dark:text-neutral-400 hover:text-orange-400 transition-colors">{contactEmail}</a>
+    </div>
+
+    <!-- Column 3: Built With -->
+    <div class="flex flex-col items-start">
+        <h3 class="font-semibold text-neutral-900 dark:text-white mb-4">Built With</h3>
+        <div class="flex items-center gap-4">
+            {frameworks.map(fw => (
+                <a href={fw.url} target="_blank" rel="noopener noreferrer" title={fw.name} class="text-neutral-500 dark:text-neutral-400 hover:text-orange-400 transition-all duration-300 hover:scale-110">
+                    <img src={fw.logo.src} alt={`${fw.name} Logo`} class="h-8 w-auto" />
+                </a>
+            ))}
+        </div>
+    </div>
+
+  </div>
+  <div class="text-center text-xs text-neutral-500 dark:text-neutral-600 mt-12">
+    &copy; {new Date().getFullYear()} Krish Patel. All Rights Reserved.
+  </div>
+</footer>

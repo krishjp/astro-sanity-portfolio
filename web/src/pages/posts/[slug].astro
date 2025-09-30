@@ -1,0 +1,45 @@
+---
+// This is a dynamic page that will be created for each blog post.
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getAllPostSlugs, getPostBySlug } from '../../lib/queries';
+import PortableTextRenderer from '../../components/PortableTextRender.jsx';
+import Sidebar from '../../components/Sidebar';
+
+// This function tells Astro which pages to generate at build time.
+export async function getStaticPaths() {
+  const slugs = await getAllPostSlugs();
+  
+  // The .filter(Boolean) is the fix. It removes any null or undefined
+  // entries from the array before mapping, preventing the error.
+  return slugs.filter(Boolean).map(({ current }) => ({
+    params: { slug: current },
+  }));
+}
+
+// Get the specific post data for this page.
+const { slug } = Astro.params;
+const post = await getPostBySlug(slug);
+
+if (!post) {
+    return new Response(null, {
+        status: 404,
+        statusText: 'Not Found'
+    });
+}
+---
+<BaseLayout title={`${post.title} | Krish Patel`}>
+    <Sidebar client:load/>
+    <article class="max-w-3xl mx-auto">
+        <header class="text-center my-12">
+        <h1 class="text-4xl md:text-5xl font-bold text-neutral-900 dark:text-white mb-4">{post.title}</h1>
+        <p class="text-neutral-500 dark:text-neutral-400">
+            Published on {new Date(post.publishedAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+        </p>
+        </header>
+
+        <div class="border-t border-neutral-200 dark:border-neutral-800 pt-8">
+
+            <PortableTextRenderer value={post.body} client:only="react" />
+        </div>
+    </article>
+</BaseLayout>
