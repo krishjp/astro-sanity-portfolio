@@ -1,0 +1,29 @@
+
+---
+interface Props {
+  title: string;
+  date: string;
+  description: string;
+  url?: string; // This prop is optional
+}
+
+const { title, date, description, url } = Astro.props;
+
+// If a URL is passed, the wrapper element will be an <a> tag.
+// Otherwise, it will be a standard <div>.
+const Tag = url ? 'a' : 'div';
+---
+
+<Tag href={url} class="group block relative p-4 rounded-lg">
+  <div class="relative">
+	<div class="flex justify-between items-baseline mb-2">
+		<h3 class="font-semibold text-white transition-colors group-hover:text-orange-400">{title}</h3>
+		<p class="text-xs text-neutral-400 font-mono">{date}</p>
+	</div>
+	<p class="text-sm text-neutral-400">
+		{description}
+	</p>
+	</div>
+	<div class="absolute inset-0 border-2 border-transparent group-hover:border-neutral-700 
+		rounded-lg transition-colors pointer-events-none"></div>
+</Tag>

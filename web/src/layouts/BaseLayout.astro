@@ -1,0 +1,89 @@
+---
+// This component provides the basic HTML shell for all pages.
+// It includes the head, sets the dark theme, and loads the Inter font.
+import '../styles/global.css';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="description" content="Astro description" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
+    <meta name="generator" content={Astro.generator} />
+    <title>Personal Website</title>
+    
+    <script is:inline>
+      const theme = (() => {
+        if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+          return localStorage.getItem('theme');
+        }
+        if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+          return 'dark';
+        }
+        return 'light';
+      })();
+
+      if (theme === 'dark') {
+        document.documentElement.classList.add('dark');
+      }
+    </script>
+  </head>
+  <body class="bg-white text-neutral-800 dark:bg-neutral-900 dark:text-neutral-300 font-sans transition-colors duration-300">
+
+    <div id="spotlight"></div>
+
+    <div class="relative z-10 max-w-5xl mx-auto px-6 pt-16 pb-20 md:pt-16 md:pb-32">
+      <slot />
+    </div>
+
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const spotlight = document.getElementById('spotlight');
+        if (spotlight) {
+          let hasMouseMoved = false;
+          window.addEventListener('mousemove', (e) => {
+            if (!hasMouseMoved) {
+                spotlight.style.opacity = '1';
+                hasMouseMoved = true;
+            }
+            spotlight.style.setProperty('--x', e.clientX + 'px');
+            spotlight.style.setProperty('--y', e.clientY + 'px');
+          });
+        }
+      });
+    </script>
+
+    <style is:global>
+      :root {
+        --spotlight-color: rgba(212, 212, 212, 0.5); /* Light theme spotlight */
+      }
+      .dark {
+        --spotlight-color: rgba(38, 38, 38, 0.75); /* Dark theme spotlight */
+      }
+      #spotlight {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: radial-gradient(
+          circle 50px at var(--x, 50%) var(--y, 50%),
+          var(--spotlight-color),
+          transparent 80%
+        );
+        opacity: 0; /* Initially hidden */
+        transition: opacity 0.3s ease-in-out;
+        /* Ensure the spotlight is behind the content but above the body's background */
+        z-index: 0; 
+        /* The spotlight should not interfere with mouse events */
+        pointer-events: none;
+      }
+    </style>
+
+  </body>
+</html>
