@@ -3,56 +3,95 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Sidebar from '../components/Sidebar.jsx';
 import Section from '../components/Section.astro';
 import ContentEntry from '../components/ContentEntry.astro';
-import { getLatestWritings, getProjects } from '../lib/queries';
+import { getLatestWritings, getProjects, getWorkExperience } from '../lib/queries';
 
 // --- Fetch live data using the new functions ---
 const latestWritings = await getLatestWritings();
 const projects = await getProjects();
+const workExperience = await getWorkExperience();
 
+const education = [
+    {
+        title: "University of California, Irvine",
+        date: "2022 – 2025",
+        description: "B.S. in Computer Science, Donald Bren School of Information and Computer Sciences."
+    }
+];
 
-// Static data remains
 const name = "Krish Patel";
 const subtitle = "SWE @ Airtech International | UCI '25";
 const bio = "I'm a software engineer focused on building end-to-end systems that serve unique purposes, from the simplest to the most complex. My skills range from machine learning & embedded systems to fullstack development & DevOps, but I'm always looking to coninue growing my knowledge pool amd skill set.";
 ---
-<BaseLayout title="Krish Patel - Software Engineer">
+<BaseLayout title="Krish Patel">
   <Sidebar client:load />
   <main class="space-y-12">
     <!-- Header Section -->
     <Section>
         <div slot="title">
-          <h1 class="text-xl font-bold text-neutral-900 dark:text-white">{name}</h1>
-          <p class="text-neutral-500 dark:text-neutral-400">{subtitle}</p>
+          <h1 class="text-xl font-bold text-text-primary">{name}</h1>
+          <p class="text-text-secondary">{subtitle}</p>
         </div>
-      <p class="text-base text-neutral-600 dark:text-neutral-300">{bio}</p>
+      <p class="text-base text-text-secondary">{bio}</p>
     </Section>
 
-    <hr class="border-neutral-200 dark:border-neutral-800" />
+    <hr class="border-border" />
 
-    <!-- Latest Writings Section -->
-    <Section linkUrl="/posts" linkText="Read All Posts →">
-      <h2 slot="title" class="flex items-center gap-2 text-neutral-900 dark:text-white">Latest Writings</h2>
-      {latestWritings.map(entry => (
-        <ContentEntry 
-          title={entry.title} 
-          date={new Date(entry.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} 
-          description={entry.description} 
-          url={`/posts/${entry.slug}`} 
-        />
-      ))}
+    <Section>
+      <h2 slot="title" class="text-text-primary">Work Experience</h2>
+      {workExperience.map(exp => {
+        console.log(exp)
+        const startDate = new Date(exp.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
+        const endDate = exp.endDate ? new Date(exp.endDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short' }) : 'Present';
+        return (
+          
+          <ContentEntry 
+            title={`${exp.jobTitle} @ ${exp.company}`} 
+            date={`${startDate} – ${endDate}`}
+            description={exp.description} 
+            url={exp.companyUrl} 
+          />
+        )
+      })}
     </Section>
 
-    <hr class="border-neutral-200 dark:border-neutral-800" />
+    <hr class="border-border" />
 
     <!-- Projects Section -->
     <Section>
-      <h2 slot="title" class="text-neutral-900 dark:text-white">Projects</h2>
+      <h2 slot="title" class="text-text-primary">Projects</h2>
       {projects.map(entry => (
         <ContentEntry 
           title={entry.title} 
           date={entry.date} 
           description={entry.description} 
           url={entry.url || (entry.slug ? `/projects/${entry.slug}` : undefined)} 
+        />
+      ))}
+    </Section>
+
+    <hr class="border-border" />
+
+    <Section>
+      <h2 slot="title" class="text-text-primary">Education</h2>
+      {education.map(edu => (
+        <ContentEntry 
+          title={edu.title} 
+          date={edu.date}
+          description={edu.description}
+        />
+      ))}
+    </Section>
+
+    <hr class="border-border" />
+
+    <Section linkUrl="/blog" linkText="Read All Posts →">
+      <h2 slot="title" class="flex items-center gap-2 text-text-primary">Latest Writings</h2>
+      {latestWritings.map(entry => (
+        <ContentEntry 
+          title={entry.title} 
+          date={new Date(entry.publishedAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })} 
+          description={entry.description} 
+          url={`/posts/${entry.slug}`} 
         />
       ))}
     </Section>
