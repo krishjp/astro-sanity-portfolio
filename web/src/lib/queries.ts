@@ -1,12 +1,12 @@
 import { client } from './sanity';
 
-// --- TypeScript Interfaces for your data ---
+// --- TypeScript Interfaces ---
 export interface Post {
   title: string;
   slug: string;
   publishedAt: string;
   description: string;
-  body: any; // The rich text content is now required for a full post
+  body: any;
 }
 
 export interface Project {
@@ -17,6 +17,14 @@ export interface Project {
   description: string;
 }
 
+export interface Experience {
+    jobTitle: string;
+    company: string;
+    companyUrl?: string;
+    startDate: string;
+    endDate?: string;
+    description: any;
+}
 
 // --- Query Functions ---
 
@@ -47,8 +55,21 @@ export async function getAllWritings(): Promise<Post[]> {
 }
 
 /**
- * Fetches all projects, ordered by the 'orderRank' field.
+ * Fetches all work experience, ordered by the 'orderRank' field.
  */
+export async function getWorkExperience(): Promise<Experience[]> {
+    const query = `*[_type == "experience"] | order(orderRank) {
+        jobTitle,
+        company,
+        companyUrl,
+        startDate,
+        endDate,
+        description
+    }`;
+    return await client.fetch(query);
+}
+
+
 export async function getProjects(): Promise<Project[]> {
   const query = `*[_type == "project"] | order(orderRank) {
     title,

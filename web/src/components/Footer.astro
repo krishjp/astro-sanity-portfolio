@@ -22,47 +22,49 @@ const frameworks = [
 ];
 ---
 
-<footer class="relative z-10 mt-24 border-t border-neutral-200 dark:border-neutral-800 py-12 transition-colors">
-  <div class="max-w-5xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-y-10 text-sm">
+<footer class="relative z-10 mt-24 border-t border-border py-12 transition-colors">
+  <div class="max-w-5xl mx-auto px-6 grid grid-cols-1 md:grid-cols-3 gap-y-10 md:gap-x-8 text-sm">
     
     <!-- Column 1: Connect -->
     <div class="flex flex-col items-center text-center">
-      <h3 class="font-semibold text-neutral-900 dark:text-white mb-4">Connect</h3>
-      <div class="flex flex-col space-y-4">
-        <a href={socialLinks.github} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-neutral-500 dark:text-neutral-400 hover:text-orange-400 transition-colors">
-          <!-- Light Mode Icon -->
-          <img src={GithubMarkBlack.src} alt="GitHub Logo" width="20" height="20" class="block dark:hidden" />
-          <!-- Dark Mode Icon -->
-          <img src={GithubMarkWhite.src} alt="GitHub Logo" width="20" height="20" class="hidden dark:block" />
-          <span>GitHub</span>
+      <h3 class="font-semibold text-text-primary mb-4">Connect</h3>
+      <div class="flex items-center gap-6">
+        <a href={socialLinks.github} target="_blank" rel="noopener noreferrer" class="text-text-secondary hover:text-accent transition-colors" title="GitHub">
+          <img src={GithubMarkBlack.src} alt="GitHub Logo" width="24" height="24" class="block dark:hidden" />
+          <img src={GithubMarkWhite.src} alt="GitHub Logo" width="24" height="24" class="hidden dark:block" />
         </a>
-        <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 text-neutral-500 dark:text-neutral-400 hover:text-orange-400 transition-colors">
-          <img src={LinkedinIcon.src} alt="LinkedIn Logo" width="20" height="20" />
-          <span>LinkedIn</span>
+        <a href={socialLinks.linkedin} target="_blank" rel="noopener noreferrer" class="text-text-secondary hover:text-accent transition-colors" title="LinkedIn">
+          <img src={LinkedinIcon.src} alt="LinkedIn Logo" width="24" height="24" />
         </a>
       </div>
     </div>
 
     <!-- Column 2: Contact -->
-    <div class="flex flex-col items-start">
-      <h3 class="font-semibold text-neutral-900 dark:text-white mb-4">Contact</h3>
-      <a href={`mailto:${contactEmail}`} class="text-neutral-500 dark:text-neutral-400 hover:text-orange-400 transition-colors">{contactEmail}</a>
+    <div class="flex flex-col items-center text-center">
+      <h3 class="font-semibold text-text-primary mb-4">Contact</h3>
+       <a href={`mailto:${contactEmail}`} class="flex items-center gap-2 text-text-secondary hover:text-accent transition-colors">
+          <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"></path>
+          </svg>
+          <span>{contactEmail}</span>
+        </a>
     </div>
 
     <!-- Column 3: Built With -->
-    <div class="flex flex-col items-start">
-        <h3 class="font-semibold text-neutral-900 dark:text-white mb-4">Built With</h3>
+    <div class="flex flex-col items-center text-center">
+        <h3 class="font-semibold text-text-primary mb-4">Built With</h3>
         <div class="flex items-center gap-4">
             {frameworks.map(fw => (
-                <a href={fw.url} target="_blank" rel="noopener noreferrer" title={fw.name} class="text-neutral-500 dark:text-neutral-400 hover:text-orange-400 transition-all duration-300 hover:scale-110">
-                    <img src={fw.logo.src} alt={`${fw.name} Logo`} class="h-8 w-auto" />
+                <a href={fw.url} target="_blank" rel="noopener noreferrer" title={fw.name} class="text-text-secondary hover:text-accent transition-all duration-300 hover:scale-110">
+                    <img src={fw.logo.src} alt={`${fw.name} Logo`} class="h-6 w-auto" />
                 </a>
             ))}
         </div>
     </div>
 
   </div>
-  <div class="text-center text-xs text-neutral-500 dark:text-neutral-600 mt-12">
+  <div class="text-center text-xs text-text-secondary mt-12">
     &copy; {new Date().getFullYear()} Krish Patel. All Rights Reserved.
   </div>
 </footer>
