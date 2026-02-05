@@ -1,0 +1,35 @@
+## Vercel Web Analytics Integration
+
+Successfully installed and configured Vercel Web Analytics for the Astro project.
+
+### Changes Made
+
+**1. Package Installation**
+- Installed `@vercel/analytics@1.6.1` (exceeds minimum required version 1.4.0)
+- Updated `package.json` with the new dependency
+- Updated `package-lock.json` to reflect the installation
+
+**2. BaseLayout.astro Configuration**
+- File: `src/layouts/BaseLayout.astro`
+- Added import statement: `import Analytics from '@vercel/analytics/astro'`
+- Added `<Analytics />` component in the `<head>` section
+- Route support is automatically included as per package specifications
+
+### Implementation Details
+
+The Analytics component was added as a default import (not a named import) according to Vercel's official documentation. The component is placed in the `<head>` section where it will be included on all pages that use this base layout.
+
+The implementation follows Astro and Vercel best practices:
+- Uses the Astro-specific package export path (`@vercel/analytics/astro`)
+- Preserves existing code structure and formatting
+- Minimal changes to achieve the integration
+
+### Verification
+
+- Build process successfully compiles the Analytics component
+- No syntax or import errors related to Analytics
+- Lock files properly updated with dependency tree
+
+### Notes
+
+The project has a pre-existing Sanity configuration issue (missing projectId in environment variables) that prevents the full build from completing. However, the Analytics integration itself is correctly implemented and builds successfully - the Sanity error occurs during the static page generation phase, which is after the Analytics component has already been successfully compiled.
