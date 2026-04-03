@@ -1,11 +1,13 @@
 import {defineField, defineType} from 'sanity'
 import {CaseIcon} from '@sanity/icons'
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 
 export default defineType({
   name: 'project',
   title: 'Project',
   type: 'document',
   icon: CaseIcon,
+  orderings: [orderRankOrdering],
   fields: [
     defineField({
       name: 'title',
@@ -46,13 +48,7 @@ export default defineType({
         validation: (rule) => rule.required(),
     }),
     // This field allows for manual sorting in the Sanity Studio.
-    // It uses a package that you might need to install: `npm install sanity-plugin-order-documents` in your studio folder
-    defineField({
-        name: 'orderRank',
-        title: 'Order Rank',
-        type: 'string',
-        hidden: true,
-    }),
+    orderRankField({type: 'project'}),
     // Optional: A slug in case you want to create a detailed page for a project later
     // defineField({
     //   name: 'slug',

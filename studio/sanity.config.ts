@@ -2,7 +2,7 @@ import {defineConfig} from 'sanity'
 import {structureTool} from 'sanity/structure'
 import {visionTool} from '@sanity/vision'
 import {schemaTypes} from './schemaTypes'
-import {orderRankField, orderRankLinksCustomDetails} from 'sanity-plugin-order-documents'
+import {orderableDocumentListDeskItem} from '@sanity/orderable-document-list'
 
 export default defineConfig({
   name: 'default',
@@ -18,9 +18,9 @@ export default defineConfig({
           .title('Content')
           .items([
             // Custom orderable list for Projects
-            orderRankLinksCustomDetails({type: 'project', S, context, title: 'Projects (Sortable)'}),
+            orderableDocumentListDeskItem({type: 'project', title: 'Projects (Sortable)', S, context}),
             // Custom orderable list for Experience
-            orderRankLinksCustomDetails({type: 'experience', S, context, title: 'Experience (Sortable)'}),
+            orderableDocumentListDeskItem({type: 'experience', title: 'Experience (Sortable)', S, context}),
             S.divider(),
             // All other types
             ...S.documentTypeListItems().filter(
@@ -29,7 +29,6 @@ export default defineConfig({
           ]),
     }),
     visionTool(),
-    orderRankField(),
   ],
 
   schema: {

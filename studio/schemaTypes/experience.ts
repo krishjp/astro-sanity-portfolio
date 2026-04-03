@@ -1,5 +1,6 @@
 import {defineField, defineType} from 'sanity'
 import {AddUserIcon} from '@sanity/icons'
+import {orderRankField, orderRankOrdering} from '@sanity/orderable-document-list'
 import blockcontent from './blockcontent'
 
 export default defineType({
@@ -7,6 +8,7 @@ export default defineType({
   title: 'Work Experience',
   type: 'document',
   icon: AddUserIcon,
+  orderings: [orderRankOrdering],
   fields: [
     defineField({
       name: 'jobTitle',
@@ -54,12 +56,7 @@ export default defineType({
       description: 'description with rich text',
       type: 'blockContent',
     }),
-    defineField({
-        name: 'orderRank',
-        title: 'Order Rank',
-        type: 'string',
-        hidden: true,
-    }),
+    orderRankField({type: 'experience'}),
   ],
   preview: {
     select: {
