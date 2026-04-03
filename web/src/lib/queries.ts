@@ -11,9 +11,10 @@ export interface Post {
 
 export interface Project {
   title: string;
-  date: string;
-  slug?: string; // Optional slug
-  url?: string; // Optional external URL
+  startDate: string;
+  endDate?: string;
+  slug?: string;
+  url?: string;
   description: string;
 }
 
@@ -76,7 +77,8 @@ export async function getProjects(): Promise<Project[]> {
     "slug": slug.current,
     url,
     description,
-    date
+    startDate,
+    endDate
   }`;
   return await client.fetch(query);
 }

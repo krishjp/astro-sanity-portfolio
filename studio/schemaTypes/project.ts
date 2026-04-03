@@ -20,10 +20,22 @@ export default defineType({
       type: 'url',
     }),
     defineField({
-      name: 'date',
-      title: 'Project duration',
-      description: 'The time period when the project was active or completed.',
-      type: 'string',
+      name: 'startDate',
+      title: 'Start Date',
+      type: 'date',
+      options: {
+        dateFormat: 'YYYY-MM-DD',
+      },
+      validation: (rule) => rule.required(),
+    }),
+    defineField({
+      name: 'endDate',
+      title: 'End Date',
+      description: 'Leave blank if the project is ongoing (shows as "Present").',
+      type: 'date',
+      options: {
+        dateFormat: 'YYYY-MM-DD',
+      },
     }),
     defineField({
         name: 'description',

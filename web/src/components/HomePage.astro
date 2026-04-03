@@ -39,18 +39,30 @@ const bio = "I'm a software engineer focused on building end-to-end systems that
     <Section>
       <h2 slot="title" class="text-text-primary">Work Experience</h2>
       {workExperience.map(exp => {
-        console.log(exp)
-        const startDate = new Date(exp.startDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-        const endDate = exp.endDate ? new Date(exp.endDate).toLocaleDateString('en-US', { year: 'numeric', month: 'short' }) : 'Present';
+        const formatOptions: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short' };
+        
+        // Safety Fallback: Handle missing or invalid dates gracefully
+        const startDateObj = exp.startDate ? new Date(exp.startDate) : null;
+        const endDateObj = exp.endDate ? new Date(exp.endDate) : null;
+
+        const start = (startDateObj && !isNaN(startDateObj.getTime())) 
+          ? startDateObj.toLocaleDateString('en-US', formatOptions) 
+          : 'TBD';
+
+        const end = (endDateObj && !isNaN(endDateObj.getTime())) 
+          ? endDateObj.toLocaleDateString('en-US', formatOptions) 
+          : (exp.endDate ? 'Invalid Date' : 'Present');
+        
+        const dateDisplay = (start === end) ? start : `${start} – ${end}`;
+
         return (
-          
           <ContentEntry 
             title={`${exp.jobTitle} @ ${exp.company}`} 
-            date={`${startDate} – ${endDate}`}
+            date={dateDisplay}
             description={exp.description} 
             url={exp.companyUrl} 
           />
-        )
+        );
       })}
     </Section>
 
@@ -59,14 +71,32 @@ const bio = "I'm a software engineer focused on building end-to-end systems that
     <!-- Projects Section -->
     <Section>
       <h2 slot="title" class="text-text-primary">Projects</h2>
-      {projects.map(entry => (
-        <ContentEntry 
-          title={entry.title} 
-          date={entry.date} 
-          description={entry.description} 
-          url={entry.url || (entry.slug ? `/projects/${entry.slug}` : undefined)} 
-        />
-      ))}
+      {projects.map(entry => {
+        const formatOptions: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short' };
+        
+        // Fallback for missing or invalid dates
+        const startDateObj = entry.startDate ? new Date(entry.startDate) : null;
+        const endDateObj = entry.endDate ? new Date(entry.endDate) : null;
+
+        const start = (startDateObj && !isNaN(startDateObj.getTime())) 
+          ? startDateObj.toLocaleDateString('en-US', formatOptions) 
+          : 'TBD';
+
+        const end = (endDateObj && !isNaN(endDateObj.getTime())) 
+          ? endDateObj.toLocaleDateString('en-US', formatOptions) 
+          : (entry.endDate ? 'Invalid Date' : 'Present');
+        
+        const dateDisplay = (start === end) ? start : `${start} – ${end}`;
+        
+        return (
+          <ContentEntry 
+            title={entry.title} 
+            date={dateDisplay} 
+            description={entry.description} 
+            url={entry.url || (entry.slug ? `/projects/${entry.slug}` : undefined)} 
+          />
+        );
+      })}
     </Section>
 
     <hr class="border-border" />
