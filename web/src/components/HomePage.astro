@@ -39,7 +39,7 @@ const bio = "I'm a software engineer focused on building end-to-end systems that
     <Section>
       <h2 slot="title" class="text-text-primary">Work Experience</h2>
       {workExperience.map(exp => {
-        const formatOptions: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short' };
+        const formatOptions: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', timeZone: 'UTC' };
         
         // Safety Fallback: Handle missing or invalid dates gracefully
         const startDateObj = exp.startDate ? new Date(exp.startDate) : null;
@@ -72,7 +72,7 @@ const bio = "I'm a software engineer focused on building end-to-end systems that
     <Section>
       <h2 slot="title" class="text-text-primary">Projects</h2>
       {projects.map(entry => {
-        const formatOptions: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short' };
+        const formatOptions: Intl.DateTimeFormatOptions = { year: 'numeric', month: 'short', timeZone: 'UTC' };
         
         // Fallback for missing or invalid dates
         const startDateObj = entry.startDate ? new Date(entry.startDate) : null;
