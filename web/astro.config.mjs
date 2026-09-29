@@ -1,17 +1,13 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
-import tailwind from "@astrojs/tailwind";
-import react from "@astrojs/react";
+import tailwindcss from '@tailwindcss/vite';
+import react from '@astrojs/react';
 
 // https://astro.build/config
 export default defineConfig({
-  integrations: [
-    // The Tailwind integration must be listed first.
-    // This setup ensures it processes your CSS correctly.
-    tailwind({
-      applyBaseStyles: true,
-    }), 
-    react()
-  ]
+  integrations: [react()],
+  vite: {
+    // Tailwind v4 runs as a Vite plugin; global.css is imported by BaseLayout.
+    plugins: [tailwindcss()],
+  },
 });
-

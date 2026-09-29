@@ -41,11 +41,11 @@ export default function Sidebar() {
 
     return (
         <div className="fixed top-1/4 -translate-y-1/2 right-4 md:right-8 z-10">
-            <div className="flex flex-col items-center p-2 bg-background/50 backdrop-blur-sm border border-border rounded-full space-y-5 transition-colors">
+            <div className="flex flex-col items-center p-2 bg-background/50 backdrop-blur-xs border border-border rounded-full space-y-5 transition-colors">
                 <a href="/" className="text-text-secondary hover:text-text-primary transition-colors">
                     <HomeIcon />
                 </a>
-                <button onClick={handleThemeToggle} className="text-text-secondary hover:text-text-primary transition-colors">
+                <button onClick={handleThemeToggle} className="cursor-pointer text-text-secondary hover:text-text-primary transition-colors">
                     <MoonIcon />
                 </button>
             </div>

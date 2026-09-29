@@ -13,7 +13,7 @@ interface Props {
 const { title, date, description, richText, url } = Astro.props;
 const Tag = url ? 'a' : 'div';
 ---
-<Tag href={url} class="group block relative p-4 rounded-lg -mx-4 -mt-4">
+<Tag href={url} class="group block relative p-4 rounded-lg -mx-4 first:-mt-4">
   <div class="relative">
     <div class="flex justify-between items-baseline mb-2">
         <h3 class="font-semibold text-text-tertiary transition-colors group-hover:text-accent">{title}</h3>
